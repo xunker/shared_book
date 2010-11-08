@@ -1,32 +1,84 @@
 = shared_book
 
-* http://github.com/#{github_username}/#{project_name}
+* http://github.com/xunker/shared_book
 
 == DESCRIPTION:
 
-FIX (describe your package)
+A Ruby Gem to connect to the SharedBook.com publishing API.
 
-== FEATURES/PROBLEMS:
-
-* FIX (list of features or problems)
+This version provides 1:1 method call structure to the SharedBook rest-like API.
 
 == SYNOPSIS:
 
-  FIX (code sample of usage)
+  s = SharedBook.new(
+    :product_api_key => "xxxx-xxxx-xxxx-xxxx-xxxx-xxxx-x",
+    :product_secret_word => "xxxx-xxxx-xxxx-xxxx-xxxx-xxxx-x",
+    :auth_token => "xxxxx_xxx",
+    :get_session_token => true
+  )
+  
+  s.bmscreate_init('test book',
+    [{:chapterTitle => 'chapter 1', :chapterText => 'text'}, {:chapterTitle => 'chapter 2', :chapterText => 'text'}]
+  )
+  
+  s.bmscreate_publish
+  
+  s.bms_addComment(:comment_title => 'comment', :comment_text => 'text', :owner_name => 'George')
 
+  s.bms_addPhoto_by_url(:file_url => 'http://www.example.com/images/logo.png', :owner_name => 'Geroge')
+  s.bms_addPhoto_by_handle(:file_name => "../images/angry_squirrel.jpg", :file_mime => "image/jpeg", :owner_name => 'Gerogee')
+  s.bms_setFrontCoverPhoto(:file_name => "../images/angry_squirrel.jpg", :file_mime => "image/jpeg", :owner_name => 'Gerogee')
+  s.bms_setBackCoverPhoto(:file_name => "../images/angry_squirrel.jpg", :file_mime => "image/jpeg", :owner_name => 'Gerogee')
+
+  s.bms_publish
+  s.bookcreate_init
+  s.bookcreate_setDedication(:dedication_text => 'Dedicated!')
+  s.bookcreate_publish
+  s.book_preview
+
+== USAGE:
+
+  Before calling SharedBook.new you will need to send you web client to the URL provided by SharedBook.auth_login_url.  This URL will return the user to your SharedBook.com return URL and it will have a unique auth token appended to the query string.  You must retrieve that token and pass it in to SharedBook.new as :auth_token.
+  
+  For testing you can call SharedBook.new with an :auth_token value of 'auto' which will automatically get this token for you but the preview URL given my book_preview will be inaccessible.  :auth_token => 'auto' should never, ever, ever be used for production purposes.
+  
+  During a real usage scenario, the order of operations should follow roughtly:
+  
+    s = SharedBook.new
+    s.bmscreate_init
+    s.bmscreate_publish
+    s.bms_addComment
+    s.bms_addPhoto_by_url
+    s.bms_addPhoto_by_handle
+    s.bms_setFrontCoverPhoto
+    s.bms_setBackCoverPhoto
+    s.bms_publish
+    s.bookcreate_init
+    s.bookcreate_setDedication
+    s.bookcreate_publish
+    s.book_preview
+  
 == REQUIREMENTS:
 
-* FIX (list of requirements)
+This library is useless unless you have an account at SharedBook.com.
+
+You will need to know your the API key and secret word for your product
+and pass them in to the constructor.
 
 == INSTALL:
 
-* FIX (sudo gem install, anything else)
+gem install shared_book
+
+== TODO:
+
+* Add the ability to post a picture using data from a string, not just a URL or filename.
+* Add a more ruby-like method for creating a new SharedBook object.
 
 == LICENSE:
 
 (The MIT License)
 
-Copyright (c) 2010 FIXME full name
+Copyright (c) 2010 Matthew Nielsen
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
