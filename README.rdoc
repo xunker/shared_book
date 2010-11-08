@@ -38,25 +38,25 @@ This version provides 1:1 method call structure to the SharedBook rest-like API.
 
 == USAGE:
 
-  Before calling SharedBook.new you will need to send you web client to the URL provided by SharedBook.auth_login_url.  This URL will return the user to your SharedBook.com return URL and it will have a unique auth token appended to the query string.  You must retrieve that token and pass it in to SharedBook.new as :auth_token.
+Before calling SharedBook.new you will need to send you web client to the URL provided by SharedBook.auth_login_url.  This URL will return the user to your SharedBook.com return URL and it will have a unique auth token appended to the query string.  You must retrieve that token and pass it in to SharedBook.new as :auth_token.
+
+For testing you can call SharedBook.new with an :auth_token value of 'auto' which will automatically get this token for you but the preview URL given my book_preview will be inaccessible.  :auth_token => 'auto' should never, ever, ever be used for production purposes.
+
+During a real usage scenario, the order of operations should follow roughtly:
   
-  For testing you can call SharedBook.new with an :auth_token value of 'auto' which will automatically get this token for you but the preview URL given my book_preview will be inaccessible.  :auth_token => 'auto' should never, ever, ever be used for production purposes.
-  
-  During a real usage scenario, the order of operations should follow roughtly:
-  
-    s = SharedBook.new
-    s.bmscreate_init
-    s.bmscreate_publish
-    s.bms_addComment
-    s.bms_addPhoto_by_url
-    s.bms_addPhoto_by_handle
-    s.bms_setFrontCoverPhoto
-    s.bms_setBackCoverPhoto
-    s.bms_publish
-    s.bookcreate_init
-    s.bookcreate_setDedication
-    s.bookcreate_publish
-    s.book_preview
+  s = SharedBook.new
+  s.bmscreate_init
+  s.bmscreate_publish
+  s.bms_addComment
+  s.bms_addPhoto_by_url
+  s.bms_addPhoto_by_handle
+  s.bms_setFrontCoverPhoto
+  s.bms_setBackCoverPhoto
+  s.bms_publish
+  s.bookcreate_init
+  s.bookcreate_setDedication
+  s.bookcreate_publish
+  s.book_preview
   
 == REQUIREMENTS:
 
