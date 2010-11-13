@@ -4,6 +4,7 @@ README.rdoc
 Rakefile
 lib/shared_book.rb
 spec/lib/shared_book_spec.rb
+spec/images/angry_squirrel.jpg
 spec/spec.opts
 spec/spec_helper.rb
 tasks/rspec.rake
